@@ -22,7 +22,7 @@ define('AUTH_SALT', 'CoreFramework!');
 
 // Configuración del servidor web
 define('PORT', '80');
-define('URL', IS_LOCAL ? 'http://localhost/proyecto/' : '___URL EN PRODUCCIÓN___');
+define('URL', IS_LOCAL ? 'http://localhost:8080/proyecto/' : '___URL EN PRODUCCIÓN___');
 
 // Sistema de archivos
 define('DS', DIRECTORY_SEPARATOR);
@@ -73,4 +73,3 @@ define('DB_CHARSET', '___REMOTE CHARTSET___');
 define('DEFAULT_CONTROLLER', 'home');
 define('DEFAULT_ERROR_CONTROLLER', 'error');
 define('DEFAULT_METHOD', 'index');
-

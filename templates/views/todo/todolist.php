@@ -8,16 +8,16 @@
         <h1 class="mb-4">
             <?= $data['page_title'] ?? 'Mi Lista de Tareas' ?>
         </h1>
-        
+
         <!-- Barra de búsqueda -->
         <div class="mb-4">
             <form method="GET" action="<?= URL ?>todo/search" class="d-flex">
-                <input type="text" class="form-control me-2" name="q" 
-                       placeholder="Buscar tareas..." value="<?= $data['search_term'] ?? '' ?>">
+                <input type="text" class="form-control me-2" name="q"
+                    placeholder="Buscar tareas..." value="<?= $data['search_term'] ?? '' ?>">
                 <button type="submit" class="btn btn-outline-secondary">Buscar</button>
             </form>
         </div>
-        
+
         <!-- Lista de tareas -->
         <div class="card">
             <div class="card-header">
@@ -37,32 +37,51 @@
                                             <?= $todo['priority_text'] ?>
                                         </span>
                                     </div>
-                                    
+
                                     <?php if ($todo['description']): ?>
                                         <p class="text-muted mb-2 small">
                                             <?= htmlspecialchars($todo['description']) ?>
                                         </p>
                                     <?php endif; ?>
-                                    
+
                                     <small class="text-muted">
                                         <?= $todo['formatted_date'] ?>
                                     </small>
                                 </div>
-                                
+
                                 <div class="d-flex gap-2">
-                                    <a href="<?= URL ?>todo/edit?id=<?= $todo['id'] ?>" 
-                                       class="btn btn-sm btn-outline-primary">
+                                    <a href="<?= URL ?>todo/edit?id=<?= $todo['id'] ?>"
+                                        class="btn btn-sm btn-outline-primary">
                                         Editar
                                     </a>
-                                    <a href="<?= URL ?>todo/delete?id=<?= $todo['id'] ?>" 
-                                       class="btn btn-sm btn-outline-danger"
-                                       onclick="return confirm('¿Eliminar esta tarea?')">
+                                    <a href="<?= URL ?>todo/delete?id=<?= $todo['id'] ?>"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('¿Eliminar esta tarea?')">
                                         Eliminar
                                     </a>
-                                    <a href="<?= URL ?>todo/toggle?id=<?= $todo['id'] ?>" 
-                                       class="btn btn-sm <?= $todo['completed'] ? 'btn-outline-success' : 'btn-success' ?>">
-                                        <?= $todo['completed'] ? 'Pendiente' : 'Completar' ?>
-                                    </a>
+
+                                    <!-- Toggle completado (checkbox) -->
+                                    <form action="<?= URL ?>/todo/toggle?id=<?= $todo['id'] ?>" method="post" class="d-inline">
+                                        <input type="checkbox"
+                                            class="form-check-input align-middle check-complete"
+                                            onchange="this.form.submit()"
+                                            <?= $todo['completed'] ? 'checked' : '' ?>
+                                            title="Marcar como completada"
+                                            aria-label="Marcar como completada">
+                                    </form>
+
+                                    <!-- Toggle favorito (estrella) -->
+                                    <form action="<?= URL ?>/todo/toggleFavorite?id=<?= $todo['id'] ?>" method="post" class="d-inline">
+                                        <button type="submit"
+                                            class="btn btn-link p-0 favorite-toggle check-fav"
+                                            title="<?= $todo['favorite'] ? 'Quitar de favoritos' : 'Marcar como favorito' ?>"
+                                            aria-label="<?= $todo['favorite'] ? 'Quitar de favoritos' : 'Marcar como favorito' ?>">
+                                            <i class="<?= $todo['favorite'] ? 'fa-solid' : 'fa-regular' ?> fa-star <?= $todo['favorite'] ? 'text-warning' : 'text-black' ?>"></i>
+                                        </button>
+                                    </form>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -86,7 +105,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Panel lateral -->
     <div class="col-md-4">
         <div class="card">

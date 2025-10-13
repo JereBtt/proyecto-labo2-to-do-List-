@@ -1,13 +1,15 @@
 <?php
 
 // Clase helper para funcionalidades específicas del todo list
-class Todo {
-    
+class Todo
+{
+
     /**
      * Obtener estadísticas de tareas
      * @return array Array con estadísticas
      */
-    public static function getStats() {
+    public static function getStats()
+    {
         $result = Db::query("
             SELECT 
                 COUNT(*) as total,
@@ -17,33 +19,42 @@ class Todo {
         ");
         return $result->fetch();
     }
-    
+
     /**
      * Obtener tareas por prioridad
      * @param string $priority Prioridad (low, medium, high)
      * @return array Array de tareas
      */
-    public static function getByPriority($priority) {
+    public static function getByPriority($priority)
+    {
         $result = Db::query("SELECT * FROM todos WHERE priority = ? ORDER BY created_at DESC", [$priority]);
         return $result->fetchAll();
     }
-    
+
     /**
      * Cambiar el estado de completado de una tarea
      * @param int $id ID de la tarea
      * @return bool True si se cambió exitosamente
      */
-    public static function toggleStatus($id) {
+    public static function toggleStatus($id)
+    {
         Db::query("UPDATE todos SET completed = NOT completed WHERE id = ?", [$id]);
         return true;
     }
-    
+
+    public static function toggleFavoriteStatus($id)
+    {
+        Db::query("UPDATE todos SET favorite = NOT favorite WHERE id = ?", [$id]);
+        return true;
+    }
+
     /**
      * Obtener el texto de prioridad en español
      * @param string $priority Prioridad en inglés
      * @return string Prioridad en español
      */
-    public static function getPriorityText($priority) {
+    public static function getPriorityText($priority)
+    {
         $priorities = [
             'low' => 'Baja',
             'medium' => 'Media',
@@ -51,13 +62,14 @@ class Todo {
         ];
         return $priorities[$priority] ?? 'Media';
     }
-    
+
     /**
      * Obtener el color de Bootstrap para la prioridad
      * @param string $priority Prioridad
      * @return string Clase CSS de Bootstrap
      */
-    public static function getPriorityColor($priority) {
+    public static function getPriorityColor($priority)
+    {
         $colors = [
             'low' => 'success',
             'medium' => 'warning',
@@ -66,4 +78,3 @@ class Todo {
         return $colors[$priority] ?? 'secondary';
     }
 }
-?>
