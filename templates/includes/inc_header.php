@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] != "123") {
+    header("Location: login");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -95,6 +104,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= URL ?>todo/add">
                             Nueva Tarea
+                        </a>
+                        <a class="nav-link" href="<?= URL ?>login/logout">
+                            Cerrar sesion
                         </a>
                     </li>
                 </ul>

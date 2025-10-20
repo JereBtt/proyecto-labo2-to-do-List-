@@ -36,7 +36,7 @@ class Core
     private function init_session()
     {
         // Aquí va el código para inicializar la sesión
-        // Ejemplo: session_start();
+        // session_start();
     }
 
     /**
