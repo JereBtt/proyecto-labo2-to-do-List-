@@ -105,8 +105,10 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] != "123") {
                         <a class="nav-link" href="<?= URL ?>todo/add">
                             Nueva Tarea
                         </a>
-                        <a class="nav-link" href="<?= URL ?>login/logout">
-                            Cerrar sesion
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navbar-brand" href="<?= URL ?>login/logout">
+                            Cerrar sesión
                         </a>
                     </li>
                 </ul>

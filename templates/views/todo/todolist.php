@@ -4,10 +4,13 @@
 <?= Toast::flash() ?>
 
 <div class="row">
+    <div class="col-md-2"></div>
     <div class="col-md-8">
-        <h1 class="mb-4">
-            <?= $data['page_title'] ?? 'Mi Lista de Tareas' ?>
-        </h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><?= $data['page_title'] ?? 'Mi Lista de Tareas' ?></h1>
+            <a href="<?= URL ?>todo/add" class="btn btn-primary">Nueva Tarea</a>
+        </div>
+
 
         <!-- Barra de búsqueda -->
         <div class="mb-4">
@@ -54,9 +57,11 @@
                                         class="btn btn-sm btn-outline-primary">
                                         Editar
                                     </a>
-                                    <a href="<?= URL ?>todo/delete?id=<?= $todo['id'] ?>"
+                                    <a href="#"
                                         class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('¿Eliminar esta tarea?')">
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        data-id="<?= $todo['id'] ?>">
                                         Eliminar
                                     </a>
 
@@ -105,21 +110,41 @@
             </div>
         </div>
     </div>
+    <div class="col-md-2"></div>
 
-    <!-- Panel lateral -->
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="mb-3">Sistema de Tareas</h5>
-                <p class="text-muted mb-4">
-                    Organiza tus actividades diarias de forma simple.
-                </p>
-                <a href="<?= URL ?>todo/add" class="btn btn-primary w-100">
-                    Nueva Tarea
-                </a>
+
+</div>
+
+<?php require_once INCLUDES . 'inc_footer.php'; ?>
+
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¿Eliminar tarea?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Esta acción no se puede deshacer. ¿Estás seguro de eliminar esta tarea?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmDelete" class="btn btn-danger">Eliminar</a>
             </div>
         </div>
     </div>
 </div>
 
-<?php require_once INCLUDES . 'inc_footer.php'; ?>
+
+<script>
+    // Cuando el modal se abre, capturamos el botón que lo disparó
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget; // el botón que abrió el modal
+        const taskId = button.getAttribute('data-id'); // obtiene el id
+        const confirmLink = deleteModal.querySelector('#confirmDelete');
+        confirmLink.href = `<?= URL ?>/todo/delete?id=${taskId}`;
+    });
+</script>

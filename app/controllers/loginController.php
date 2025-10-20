@@ -35,7 +35,6 @@ class loginController
         }
         View::render('loginview');
     }
-
     function logout()
     {
         session_start();
