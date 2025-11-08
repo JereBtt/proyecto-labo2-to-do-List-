@@ -1,5 +1,32 @@
 # 📋 TODO LIST
 
+## Repositorio Github
+https://github.com/JereBtt/proyecto-labo2-to-do-List-
+
+## 2º Parcial Laboratorio II - CRUD de Proyectos
+
+Comisión: 6/1N
+Integrantes:
+Bonetto - Miranda - Santander
+
+
+## 🧠 Patrón de Diseño Aplicado
+
+**Patrón:** MVC (Model–View–Controller)
+
+**Descripción:**  
+El sistema sigue el patrón MVC, separando la lógica de negocio, la presentación y el control de flujo.  
+- **Modelo (M):** gestiona la base de datos y operaciones CRUD (por ejemplo `todoModel.php` y `proyectosModel.php`).  
+- **Vista (V):** contiene la parte visual del sistema, las páginas HTML y los formularios (`todolist.php`, `addProyectos.php`, etc.).  
+- **Controlador (C):** conecta los modelos con las vistas y maneja las peticiones del usuario (`todoController.php`, `proyectosController.php`). 
+
+**Ejemplo en el código:**  
+En `proyectosController.php`, el método `index()` llama al modelo para obtener los datos y luego renderiza la vista:
+$proyectos = proyectosModel::getAllWithDetails();
+View::render('proyectoslist', $data);
+
+
+
 ## 🏗️ Arquitectura MVC
 
 ### **Modelo (M)**

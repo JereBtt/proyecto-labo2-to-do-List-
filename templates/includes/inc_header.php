@@ -98,6 +98,11 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] != "123") {
                             Todo List
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= URL ?>proyectos">
+                            Proyectos List
+                        </a>
+                    </li>
                 </ul>
 
                 <ul class="navbar-nav">
