@@ -8,15 +8,23 @@ class todoModel extends Model
     protected $table = 'todos';
 
     // Campos que se pueden llenar masivamente
-    protected $fillable = ['task', 'description', 'priority', 'completed', 'favorite'];
+    protected $fillable = ['task', 'description', 'priority', 'completed', 'favorite', 'project_id'];
 
     /**
      * Obtener todas las tareas con información adicional
      * @return array Array de tareas con datos procesados
      */
-    public static function getAllWithDetails()
+    public static function getAllWithDetails($projectId = null)
     {
-        $todos = self::all();
+
+        $result = Db::query("
+        SELECT  t.*, 
+                p.nombre AS project_name
+        FROM todos t
+        LEFT JOIN proyectos p ON p.id = t.project_id
+        ORDER BY t.created_at DESC
+    ");
+        $todos = $result->fetchAll();
 
         // Procesar cada tarea para agregar información adicional
         foreach ($todos as &$todo) {

@@ -14,19 +14,19 @@
             <div class="card-body">
                 <form method="POST" action="<?= URL ?>todo/update">
                     <input type="hidden" name="id" value="<?= $data['todo']['id'] ?>">
-                    
+
                     <div class="mb-3">
                         <label for="task" class="form-label">Tarea *</label>
-                        <input type="text" class="form-control" id="task" name="task" 
-                               placeholder="¿Qué necesitas hacer?" value="<?= htmlspecialchars($data['todo']['task']) ?>" required>
+                        <input type="text" class="form-control" id="task" name="task"
+                            placeholder="¿Qué necesitas hacer?" value="<?= htmlspecialchars($data['todo']['task']) ?>" required>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="description" class="form-label">Descripción</label>
-                        <textarea class="form-control" id="description" name="description" 
-                                  rows="3" placeholder="Detalles adicionales (opcional)"><?= htmlspecialchars($data['todo']['description']) ?></textarea>
+                        <textarea class="form-control" id="description" name="description"
+                            rows="3" placeholder="Detalles adicionales (opcional)"><?= htmlspecialchars($data['todo']['description']) ?></textarea>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="priority" class="form-label">Prioridad</label>
                         <select class="form-select" id="priority" name="priority">
@@ -35,7 +35,19 @@
                             <option value="high" <?= $data['todo']['priority'] == 'high' ? 'selected' : '' ?>>🔴 Alta</option>
                         </select>
                     </div>
-                    
+
+                    <label class="form-label">Proyecto (opcional)</label>
+                    <select name="project_id" class="form-select">
+                        <option value="">— Sin proyecto —</option>
+                        <?php foreach ($data['projects'] as $p): ?>
+                            <option value="<?= $p['id'] ?>"
+                                <?= isset($data['todo']) && $data['todo']['project_id'] == $p['id'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($p['nombre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <a href="<?= URL ?>todo" class="btn btn-outline-secondary me-md-2">
                             Cancelar

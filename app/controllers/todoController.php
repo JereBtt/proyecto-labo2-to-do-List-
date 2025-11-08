@@ -31,7 +31,8 @@ class todoController extends Controller
     function add()
     {
         $data = [
-            'page_title' => 'Agregar Nueva Tarea'
+            'page_title' => 'Agregar Nueva Tarea',
+            'projects'   => proyectosModel::all(),
         ];
         // Renderizar vista directamente sin pasar por to_Object
         View::render('addTodo', $data);
@@ -57,7 +58,8 @@ class todoController extends Controller
 
         $data = [
             'page_title' => 'Editar Tarea',
-            'todo' => $todo
+            'todo' => $todo,
+            'projects'   => proyectosModel::all(),
         ];
 
         View::render('editTodo', $data);
@@ -74,12 +76,24 @@ class todoController extends Controller
             return;
         }
 
+        // Leer project_id y validar existencia si viene
+        $projectId = null;
+        if (isset($_POST['project_id']) && $_POST['project_id'] !== '') {
+            if (!is_numeric($_POST['project_id']) || !proyectosModel::find($_POST['project_id'])) {
+                $this->redirectWithMessage('todo/add', 'Proyecto inválido o inexistente', 'danger');
+                return;
+            }
+            $projectId = (int)$_POST['project_id'];
+        }
+
         // Preparar datos
         $todoData = [
             'task' => trim($_POST['task']),
             'description' => trim($_POST['description'] ?? ''),
             'priority' => $_POST['priority'] ?? 'medium',
-            'completed' => 0
+            'completed' => 0,
+            'favorite' => 0,
+            'project_id'  => $projectId,
         ];
 
         // Crear tarea
@@ -113,11 +127,22 @@ class todoController extends Controller
             return;
         }
 
+        // Leer/validar project_id
+        $projectId = null;
+        if (isset($_POST['project_id']) && $_POST['project_id'] !== '') {
+            if (!is_numeric($_POST['project_id']) || !proyectosModel::find($_POST['project_id'])) {
+                $this->redirectWithMessage('todo/edit?id=' . $id, 'Proyecto inválido o inexistente', 'danger');
+                return;
+            }
+            $projectId = (int)$_POST['project_id'];
+        }
+
         // Preparar datos
         $todoData = [
             'task' => trim($_POST['task']),
             'description' => trim($_POST['description'] ?? ''),
-            'priority' => $_POST['priority'] ?? 'medium'
+            'priority' => $_POST['priority'] ?? 'medium',
+            'project_id'  => $projectId,
         ];
 
         // Actualizar tarea

@@ -40,7 +40,9 @@
                                             <?= $todo['priority_text'] ?>
                                         </span>
                                     </div>
-
+                                    <small class="text-muted">
+                                        Proyecto: <?= htmlspecialchars($todo['project_name'] ?? '—') ?>
+                                    </small>
                                     <?php if ($todo['description']): ?>
                                         <p class="text-muted mb-2 small">
                                             <?= htmlspecialchars($todo['description']) ?>
