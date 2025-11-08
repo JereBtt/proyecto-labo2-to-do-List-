@@ -26,6 +26,17 @@ $proyectos = proyectosModel::getAllWithDetails();
 View::render('proyectoslist', $data);
 
 
+## 🔗 Relación entre Proyectos y Tareas
+
+El sistema vincula cada tarea del **Todo List** con un **Proyecto**.
+
+Cada registro en la tabla `todos` tiene el campo `project_id`, que actúa como clave foránea hacia la tabla `proyectos(id)`.  
+De esta forma, una tarea puede pertenecer a un proyecto específico, y en las vistas se muestra el nombre del proyecto asociado.
+
+Cuando se elimina un proyecto, las tareas quedan sin asignar (gracias a la restricción `ON DELETE SET NULL`), conservando el historial del sistema.  
+Esta relación permite filtrar, listar y organizar las tareas según el proyecto al que pertenecen.
+
+
 
 ## 🏗️ Arquitectura MVC
 
